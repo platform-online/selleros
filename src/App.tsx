@@ -79,6 +79,9 @@ function Gate() {
     <Routes>
       <Route element={<AppShell />} path="/">
         <Route index element={<DashboardPage />} />
+        {/* Canonical dashboard lives at "/" — "#/dashboard" is a documented
+            external link (README, deep links), so alias it instead of 404. */}
+        <Route path="dashboard" element={<Navigate to="/" replace />} />
         <Route path="sales" element={<SalesPage />} />
         <Route path="orders" element={<OrdersPage />} />
         <Route path="orders/:id" element={<OrderDetailPage />} />
