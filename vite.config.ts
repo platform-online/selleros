@@ -58,8 +58,10 @@ export default defineConfig({
       },
     },
   },
-  server: { host: '0.0.0.0', port: 5173, strictPort: false },
-  preview: { host: '0.0.0.0', port: 4173 },
+  // allowedHosts: local dev/preview servers are reached through a proxy host
+  // (e.g. <port>-<sandbox>.e2b.app); Vite's default host allowlist rejects it.
+  server: { host: '0.0.0.0', port: 5173, strictPort: false, allowedHosts: true },
+  preview: { host: '0.0.0.0', port: 4173, allowedHosts: true },
   test: {
     environment: 'jsdom',
     globals: true,
