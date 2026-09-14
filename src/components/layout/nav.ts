@@ -16,6 +16,7 @@ export interface NavItem {
     | 'wallet'
     | 'spark'
     | 'report'
+    | 'file'
     | 'settings';
   mobile?: boolean;
 }
@@ -34,6 +35,7 @@ export const NAV_ITEMS: NavItem[] = [
   { path: '/finance', labelKey: 'nav.finance', icon: 'wallet', mobile: true },
   { path: '/insights', labelKey: 'nav.insights', icon: 'spark' },
   { path: '/reports', labelKey: 'nav.reports', icon: 'report' },
+  { path: '/documents', labelKey: 'nav.documents', icon: 'file' },
   { path: '/settings', labelKey: 'nav.settings', icon: 'settings' },
 ];
 

@@ -14,6 +14,7 @@ import {
   IconCart,
   IconChart,
   IconClose,
+  IconFile,
   IconGlobe,
   IconHandshake,
   IconHome,
@@ -44,6 +45,7 @@ const ICONS: Record<NavItem['icon'], typeof IconHome> = {
   wallet: IconWallet,
   spark: IconSpark,
   report: IconReport,
+  file: IconFile,
   settings: IconSettings,
 };
 

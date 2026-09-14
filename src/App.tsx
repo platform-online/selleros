@@ -16,6 +16,7 @@ import { AdsPage } from './pages/Ads';
 import { FinancePage } from './pages/Finance';
 import { InsightsPage } from './pages/Insights';
 import { ReportsPage } from './pages/Reports';
+import { DocumentsPage } from './pages/Documents';
 import { SettingsPage } from './pages/Settings';
 import { OnboardingPage } from './pages/Onboarding';
 import { NotFoundPage } from './pages/NotFound';
@@ -92,6 +93,7 @@ function Gate() {
         <Route path="finance" element={<FinancePage />} />
         <Route path="insights" element={<InsightsPage />} />
         <Route path="reports" element={<ReportsPage />} />
+        <Route path="documents" element={<DocumentsPage />} />
         <Route path="settings" element={<SettingsPage />} />
         <Route path="settings/:section" element={<SettingsPage />} />
         <Route path="onboarding" element={<OnboardingPage />} />

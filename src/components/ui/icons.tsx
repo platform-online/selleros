@@ -368,3 +368,28 @@ export const IconTrendDown = (p: IconProps) => (
     <path d="M15 17h5v-5" />
   </Svg>
 );
+
+export const IconPrinter = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M7 8V4h10v4" />
+    <rect x="4" y="8" width="16" height="8" rx="2" />
+    <path d="M7 13h10v7H7z" />
+  </Svg>
+);
+
+export const IconShare = (p: IconProps) => (
+  <Svg {...p}>
+    <circle cx="6" cy="12" r="2.5" />
+    <circle cx="17" cy="6" r="2.5" />
+    <circle cx="17" cy="18" r="2.5" />
+    <path d="m8.2 10.8 6.6-3.6M8.2 13.2l6.6 3.6" />
+  </Svg>
+);
+
+export const IconFile = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+    <path d="M14 3v5h5" />
+    <path d="M9 13h6M9 17h6" />
+  </Svg>
+);
