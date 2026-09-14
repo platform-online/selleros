@@ -1,0 +1,305 @@
+/* =========================================================================
+   Base — reset, typography, layout primitives, accessibility, responsive
+   ========================================================================= */
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scrollbar-gutter: stable;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink-900);
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  line-height: var(--leading-normal);
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'tnum';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  min-height: 100dvh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink-900);
+}
+
+h1 {
+  font-size: var(--text-2xl);
+}
+h2 {
+  font-size: var(--text-xl);
+}
+h3 {
+  font-size: var(--text-lg);
+}
+h4 {
+  font-size: var(--text-md);
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--primary-600);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+::selection {
+  background: var(--primary-100);
+  color: var(--primary-900);
+}
+
+/* Numbers in financial contexts must align and never jitter */
+.num,
+.money,
+.metric-value {
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: var(--tracking-tight);
+}
+
+.money-positive {
+  color: var(--fin-profit);
+}
+.money-negative {
+  color: var(--fin-loss);
+}
+.money-neutral {
+  color: var(--ink-900);
+}
+
+/* Bangla needs slightly more leading and must be allowed to wrap anywhere */
+:lang(bn),
+[lang='bn'] {
+  line-height: var(--leading-relaxed);
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
+}
+
+/* ---------- Accessibility helpers ---------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: -100px;
+  z-index: var(--z-toast);
+  background: var(--surface);
+  color: var(--primary-700);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--line);
+  transition: top var(--duration-base) var(--ease-out);
+}
+.skip-link:focus {
+  top: var(--space-4);
+  text-decoration: none;
+}
+
+/* ---------- App shell ---------- */
+#root {
+  min-height: 100dvh;
+}
+
+.app-shell {
+  display: flex;
+  min-height: 100dvh;
+  background: var(--bg);
+}
+
+.app-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-7) var(--space-10);
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-7);
+}
+
+.page-header__title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.page-header h1 {
+  font-size: var(--text-2xl);
+  letter-spacing: var(--tracking-tight);
+}
+
+.page-header__subtitle {
+  color: var(--ink-500);
+  font-size: var(--text-md);
+  max-width: 62ch;
+}
+
+.page-header__actions {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Wide-monitor support: keep content readable, use the space with grids */
+@media (min-width: 1600px) {
+  :root {
+    --content-max: 1720px;
+  }
+}
+@media (min-width: 2200px) {
+  :root {
+    --content-max: 1960px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .app-content {
+    padding: var(--space-5) var(--space-5) calc(var(--bottomnav-h) + var(--space-8) + var(--safe-bottom));
+  }
+}
+
+@media (max-width: 479px) {
+  .app-content {
+    padding: var(--space-4) var(--space-4) calc(var(--bottomnav-h) + var(--space-7) + var(--safe-bottom));
+  }
+  .page-header h1 {
+    font-size: var(--text-xl);
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Scrollbars (subtle) ---------- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink-200) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--ink-200);
+  border-radius: var(--radius-pill);
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-300);
+  background-clip: content-box;
+}
+
+/* ---------- Print ---------- */
+@media print {
+  .app-sidebar,
+  .app-topbar,
+  .bottom-nav,
+  .fab,
+  .no-print {
+    display: none !important;
+  }
+  .app-content {
+    padding: 0;
+    max-width: none;
+  }
+  body {
+    background: #fff;
+  }
+  .card {
+    box-shadow: none;
+    border-color: var(--line-strong);
+    break-inside: avoid;
+  }
+}

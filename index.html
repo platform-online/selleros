@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta
+      name="description"
+      content="SellerOS — a local-first business operating system for e-commerce, F-commerce and online sellers. Products, inventory, purchasing, orders, customers, suppliers, couriers, returns, expenses, advertising, finance, cash flow, profitability and decision support in one place."
+    />
+    <meta name="color-scheme" content="light" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="SellerOS" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <title>SellerOS — Business Operating System</title>
+    <style>
+      /* Inline boot shell so first paint is never a blank white screen. */
+      html,
+      body,
+      #root {
+        height: 100%;
+        margin: 0;
+        background: #f7f8fa;
+      }
+      #root:empty::after {
+        content: 'SellerOS';
+        display: block;
+        padding: 24px;
+        font: 600 18px/1.4 system-ui, -apple-system, 'Segoe UI', sans-serif;
+        color: #143d68;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      SellerOS runs entirely in your browser and needs JavaScript enabled. Your data never leaves
+      this device.
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
