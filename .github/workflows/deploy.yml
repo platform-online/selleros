@@ -5,9 +5,6 @@ on:
     branches: [main]
   workflow_dispatch:
 
-# Pages deployment needs these; the site is enabled automatically on the
-# first run via configure-pages (enablement: true), so a maintainer does not
-# have to flip a setting by hand before the first deploy.
 permissions:
   contents: read
   pages: write
@@ -40,10 +37,25 @@ jobs:
       - name: Run quality gate
         run: npm run qa
 
-      - name: Enable GitHub Pages (workflow build type)
+      # Creating the Pages site itself needs the "Administration" permission,
+      # which a workflow's GITHUB_TOKEN cannot be granted. If the site does
+      # not exist yet, fail loudly with the exact manual step instead of
+      # pretending to deploy: Settings -> Pages -> Source -> GitHub Actions.
+      - name: Verify GitHub Pages is enabled
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -uo pipefail
+          status=$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq '.build_type' 2>/dev/null)
+          if [ $? -eq 0 ] && [ -n "$status" ]; then
+            echo "GitHub Pages is enabled (build type: $status)."
+          else
+            echo "::error title=GitHub Pages not enabled::This repository has no Pages site yet, and a workflow token cannot create one. Open the repository in GitHub, go to Settings -> Pages -> Build and deployment -> Source, choose 'GitHub Actions', then re-run this workflow."
+            exit 1
+          fi
+
+      - name: Configure Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
@@ -61,3 +73,21 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Confirm the site responds
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -uo pipefail
+          url="${{ steps.deployment.outputs.page_url }}"
+          for i in $(seq 1 12); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' -L "$url" || echo 000)
+            echo "attempt $i: $code $url"
+            if [ "$code" = "200" ]; then
+              echo "Live site verified: $url"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "::error title=Deployed but not reachable::$url did not return HTTP 200 within 2 minutes."
+          exit 1
